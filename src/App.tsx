@@ -1,15 +1,13 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
 import Screen from "./Screen";
 import Buttons from "./Buttons";
 
 function App() {
-  const [count, setCount] = useState(0);
-
+  const [currentVal, setCurrentVal] = useState([]);
   return (
     <div className="bg-black rounded-xl  h-screen py-5 ">
-      <Screen />
-      <Buttons />
+      <Screen currentVal={currentVal} setCurrentVal={setCurrentVal} />
+      <Buttons currentVal={currentVal} setCurrentVal={setCurrentVal} />
     </div>
   );
 }
