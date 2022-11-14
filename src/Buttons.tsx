@@ -1,9 +1,11 @@
-interface ValProps {
-  currentVal: Array<string>;
-  setCurrentVal: Function;
+import { Dispatch, FC } from "react";
+
+interface ButtonProps {
+  currentVal: string[];
+  setCurrentVal: Dispatch<React.SetStateAction<string[]>>;
 }
 
-function Buttons(props: ValProps) {
+const Buttons: FC<ButtonProps> = (props) => {
   return (
     <div className=" h-2/3 py-5 px-5 grid grid-cols-4 ">
       <button
@@ -13,7 +15,7 @@ function Buttons(props: ValProps) {
         AC
       </button>
       <button
-        onClick={() => props.setCurrentVal(["-", props.currentVal])}
+        onClick={() => props.setCurrentVal(["-", ...props.currentVal])}
         className="rounded-full h-4/5 w-11/12 bg-slate-400 text-3xl font-semibold"
       >
         +/-
@@ -94,7 +96,7 @@ function Buttons(props: ValProps) {
         0
       </button>
       <button
-        onClick={() => props.setCurrentVal([props.currentVal, "."])}
+        onClick={() => props.setCurrentVal([...props.currentVal, "."])}
         className="rounded-full h-4/5 w-11/12 bg-gray-600 text-3xl font-semibold text-white"
       >
         .
@@ -104,5 +106,5 @@ function Buttons(props: ValProps) {
       </button>
     </div>
   );
-}
+};
 export default Buttons;
