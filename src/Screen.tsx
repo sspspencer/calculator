@@ -1,8 +1,8 @@
 import { Dispatch, FC } from "react";
 
 interface ScreenProps {
-  currentVal: string[];
-  setCurrentVal: Dispatch<React.SetStateAction<string[]>>;
+  currentVal: string;
+  setCurrentVal: Dispatch<React.SetStateAction<string>>;
 }
 
 const Screen: FC<ScreenProps> = (props) => {
