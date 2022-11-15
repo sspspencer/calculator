@@ -32,7 +32,7 @@ const Buttons: FC<ButtonProps> = (props) => {
     }
   };
   return (
-    <div className=" h-2/3 py-5 px-5 grid grid-cols-4 ">
+    <div className=" h-2/3 w-80 py-5 px-5 grid grid-cols-4 ">
       <button
         onClick={() => props.setCurrentVal("0")}
         className="rounded-full  h-4/5 w-11/12 bg-slate-400 text-3xl font-semibold"
