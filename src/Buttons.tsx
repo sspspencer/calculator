@@ -6,8 +6,27 @@ interface ButtonProps {
 }
 
 const Buttons: FC<ButtonProps> = (props) => {
+  let currentOp = "";
+  const equal = () => {
+    if (operatorChecker() === true && currentOp !== ".") {
+      let equation = eval(props.currentVal);
+      console.log(equation);
+      let result = equation.toString();
+      return props.setCurrentVal(result);
+    }
+    console.log("you suck");
+  };
   const boolean = props.currentVal === "0";
-  const operator = ["/", "x", "-", "+", ".", "%"];
+  const operator = ["/", "*", "-", "+", ".", "%"];
+  //   function to check if there is already an operator inside currentVal
+  const operatorChecker = () => {
+    for (let i = 0; i < operator.length; i++) {
+      if (props.currentVal.includes(operator[i])) {
+        currentOp = operator[i];
+        return true;
+      }
+    }
+  };
   const digit = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
   const currentValueHandler = (i: string) => {
     if (digit.includes(i) && !boolean) {
@@ -19,7 +38,8 @@ const Buttons: FC<ButtonProps> = (props) => {
     if (
       (operator.includes(i) && props.currentVal === "") ||
       (operator.includes(i) && operator.includes(props.currentVal.slice(-1))) ||
-      props.currentVal.includes(i)
+      (props.currentVal.includes(i) && i === ".") ||
+      operatorChecker() === true
     ) {
       return;
     } else if (operator.includes(i) && i !== "%") {
@@ -76,7 +96,7 @@ const Buttons: FC<ButtonProps> = (props) => {
         9
       </button>
       <button
-        onClick={() => currentValueHandler("x")}
+        onClick={() => currentValueHandler("*")}
         className="rounded-full h-4/5 w-11/12 bg-orange-400 text-3xl font-semibold text-white"
       >
         x
@@ -141,7 +161,10 @@ const Buttons: FC<ButtonProps> = (props) => {
       >
         .
       </button>
-      <button className="rounded-full h-4/5 w-11/12 bg-orange-400 text-4xl font-semibold text-white">
+      <button
+        onClick={() => equal()}
+        className="rounded-full h-4/5 w-11/12 bg-orange-400 text-4xl font-semibold text-white"
+      >
         =
       </button>
     </div>
