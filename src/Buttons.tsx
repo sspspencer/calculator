@@ -62,7 +62,7 @@ const Buttons: FC<ButtonProps> = (props) => {
       props.setCurrentVal(cButton);
     }
 
-    if (evalNumberIsTrue && i !== "." && evalNumberIsTrue && i !== "%") {
+    if (evalNumberIsTrue && i !== "." && i !== "%" && !operator.includes(i)) {
       props.setCurrentVal(i);
     }
 
