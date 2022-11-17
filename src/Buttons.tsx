@@ -4,21 +4,25 @@ interface ButtonProps {
   currentVal: string;
   setCurrentVal: Dispatch<React.SetStateAction<string>>;
 }
+let evalNumberIsTrue = false;
+let currentOp = "";
 
 const Buttons: FC<ButtonProps> = (props) => {
-  let currentOp = "";
+  const currentValZeroIsTrue = props.currentVal === "0";
+
   const equal = () => {
     if (operatorChecker() === true && currentOp !== ".") {
       let equation = eval(props.currentVal);
       console.log(equation);
       let result = equation.toString();
+      evalNumberIsTrue = true;
       return props.setCurrentVal(result);
     }
     console.log("you suck");
   };
-  const boolean = props.currentVal === "0";
+
   const operator = ["/", "*", "-", "+", ".", "%"];
-  //   function to check if there is already an operator inside currentVal
+
   const operatorChecker = () => {
     for (let i = 0; i < operator.length; i++) {
       if (props.currentVal.includes(operator[i])) {
@@ -27,11 +31,13 @@ const Buttons: FC<ButtonProps> = (props) => {
       }
     }
   };
+
   const digit = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+
   const currentValueHandler = (i: string) => {
-    if (digit.includes(i) && !boolean) {
+    if (digit.includes(i) && !currentValZeroIsTrue) {
       props.setCurrentVal(props.currentVal + i);
-    } else if (digit.includes(i) && boolean) {
+    } else if (digit.includes(i) && currentValZeroIsTrue) {
       props.setCurrentVal(i);
     }
 
@@ -47,9 +53,14 @@ const Buttons: FC<ButtonProps> = (props) => {
     } else if (i === "%") {
       const current = parseFloat(props.currentVal);
       const percent = current / 100;
-
       props.setCurrentVal(percent.toString());
     }
+
+    if (evalNumberIsTrue) {
+      props.setCurrentVal(i);
+    }
+
+    evalNumberIsTrue = false;
   };
   return (
     <div className=" h-3/4 w-96 py-5 px-5 grid grid-cols-4 sm:w-72">
