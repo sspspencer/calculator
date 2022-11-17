@@ -21,7 +21,7 @@ const Buttons: FC<ButtonProps> = (props) => {
     console.log("you suck");
   };
 
-  const operator = ["/", "*", "-", "+", ".", "%"];
+  const operator = ["/", "*", "-", "+"];
 
   const operatorChecker = () => {
     for (let i = 0; i < operator.length; i++) {
@@ -48,15 +48,21 @@ const Buttons: FC<ButtonProps> = (props) => {
       operatorChecker() === true
     ) {
       return;
-    } else if (operator.includes(i) && i !== "%") {
+    } else if ((operator.includes(i) && i !== "%") || i === ".") {
       props.setCurrentVal(props.currentVal + i);
     } else if (i === "%") {
       const current = parseFloat(props.currentVal);
       const percent = current / 100;
       props.setCurrentVal(percent.toString());
     }
+    if (i === "DEL" && !currentValZeroIsTrue && props.currentVal.length === 1) {
+      props.setCurrentVal("0");
+    } else if (i === "DEL" && !currentValZeroIsTrue) {
+      const cButton = props.currentVal.slice(0, -1);
+      props.setCurrentVal(cButton);
+    }
 
-    if (evalNumberIsTrue) {
+    if (evalNumberIsTrue && i !== "." && evalNumberIsTrue && i !== "%") {
       props.setCurrentVal(i);
     }
 
@@ -71,10 +77,10 @@ const Buttons: FC<ButtonProps> = (props) => {
         AC
       </button>
       <button
-        onClick={() => currentValueHandler("+/-")}
+        onClick={() => currentValueHandler("DEL")}
         className="rounded-full h-4/5 w-11/12 bg-slate-400 text-3xl font-semibold"
       >
-        +/-
+        DEL
       </button>
       <button
         onClick={() => currentValueHandler("%")}
