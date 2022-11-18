@@ -4,8 +4,11 @@ interface ButtonProps {
   currentVal: string;
   setCurrentVal: Dispatch<React.SetStateAction<string>>;
 }
+
 let evalNumberIsTrue = false;
 let currentOp = "";
+const operator = ["/", "*", "-", "+"];
+const digit = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
 const Buttons: FC<ButtonProps> = (props) => {
   const currentValZeroIsTrue = props.currentVal === "0";
@@ -13,15 +16,11 @@ const Buttons: FC<ButtonProps> = (props) => {
   const equal = () => {
     if (operatorChecker() === true && currentOp !== ".") {
       let equation = eval(props.currentVal);
-      console.log(equation);
       let result = equation.toString();
       evalNumberIsTrue = true;
       return props.setCurrentVal(result);
     }
-    console.log("you suck");
   };
-
-  const operator = ["/", "*", "-", "+"];
 
   const operatorChecker = () => {
     for (let i = 0; i < operator.length; i++) {
@@ -31,8 +30,6 @@ const Buttons: FC<ButtonProps> = (props) => {
       }
     }
   };
-
-  const digit = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
   const currentValueHandler = (i: string) => {
     if (digit.includes(i) && !currentValZeroIsTrue) {
@@ -68,6 +65,7 @@ const Buttons: FC<ButtonProps> = (props) => {
 
     evalNumberIsTrue = false;
   };
+
   return (
     <div className=" h-3/4 w-96 py-5 px-5 grid grid-cols-4 sm:w-72">
       <button
